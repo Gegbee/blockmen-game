@@ -7,15 +7,17 @@ public class CameraAttacher : NetworkBehaviour
 {
     [SerializeField] private GameObject cameraPrefab;
     // Start is called before the first frame update
-    void Start()
+    public override void OnStartClient()
     {
+        base.OnStartClient();
         GameObject ca = Instantiate(cameraPrefab);
-        ca.GetComponent<FollowerCamera>().target = transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (IsOwner)
+        {
+            ca.tag = "MainCamera";
+            ca.GetComponent<FollowerCamera>().target = transform;
+        } else
+        {
+            ca.SetActive(false);
+        }
     }
 }

@@ -10,12 +10,19 @@ public class LobbyDisplay : NetworkBehaviour
 {
     public TMP_Text usernamesDisplay;
     public TMP_Text addressDisplay;
+    public TMP_Text HostDisplay;
     public GameObject startButton;
 
+    public void Start()
+    {
+        startButton.SetActive(false);
+        HostDisplay.text = "";
+    }
     public override void OnStartClient()
     {
         base.OnStartClient();
         GameManager.OnPlayersUpdate += GameManager_OnPlayersUpdate;
+        GameManager.OnHostUpdate += GameManager_OnHostUpdate;
         usernamesDisplay.text = GetUsernamesFormatted();
         addressDisplay.text = InstanceFinder.NetworkManager.GetComponent<Tugboat>().GetClientAddress();
     }
@@ -23,6 +30,7 @@ public class LobbyDisplay : NetworkBehaviour
     {
         base.OnStopClient();
         GameManager.OnPlayersUpdate -= GameManager_OnPlayersUpdate;
+        GameManager.OnHostUpdate -= GameManager_OnHostUpdate;
     }
     private void GameManager_OnPlayersUpdate()
     {
@@ -31,11 +39,15 @@ public class LobbyDisplay : NetworkBehaviour
     private string GetUsernamesFormatted()
     {
         string rt_text = "";
-        Debug.Log(GameManager.Instance.Players.Count.ToString());
         foreach (PlayerManager entry in GameManager.Instance.Players)
         {
             rt_text += entry.GetUsername() + System.Environment.NewLine;
         }
         return rt_text;
+    }
+    private void GameManager_OnHostUpdate()
+    {
+        startButton.SetActive(true);
+        HostDisplay.text = "ur the mf host";
     }
 }
