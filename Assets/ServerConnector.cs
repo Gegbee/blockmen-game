@@ -10,14 +10,13 @@ public class ServerConnector : MonoBehaviour
     public static string username = "";
     public void OnJoinPressed()
     {
-        if (!InputCheck()) return;
-        Debug.Log(username);
+        //if (!InputCheck()) return;
         username = UsernameInput.text;
         InstanceFinder.ClientManager.StartConnection();
     }
     public void OnHostPressed()
     {
-        if (!InputCheck()) return;
+        //if (!InputCheck()) return;
         username = UsernameInput.text;
         InstanceFinder.ServerManager.StartConnection();
     }

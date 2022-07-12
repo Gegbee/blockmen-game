@@ -48,4 +48,12 @@ public class PlayerManager : NetworkBehaviour
     {
         return username;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            isReady = !isReady;
+        }
+    }
+
 }

@@ -29,7 +29,13 @@ public class GameManager : NetworkBehaviour
 
     private void OnHost(NetworkConnection prev, NetworkConnection next, bool asServer)
     {
-        if (!asServer && Host != null && Host.IsLocalClient)
+        if (asServer) return;
+        if (next == null)
+        {
+            InstanceFinder.ClientManager.StopConnection();
+            // Go back to FFA menu scene
+        }
+        if (Host.IsLocalClient)
         {
             OnHostUpdate?.Invoke();
         }

@@ -50,4 +50,9 @@ public class LobbyDisplay : NetworkBehaviour
         startButton.SetActive(true);
         HostDisplay.text = "ur the mf host";
     }
+    public void OnLeavePressed()
+    {
+        if (IsClient) InstanceFinder.ClientManager.StopConnection();
+        else InstanceFinder.ServerManager.StopConnection(false);
+    }
 }
